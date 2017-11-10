@@ -7,8 +7,7 @@
  */
 
 namespace Sdk\Seller;
-use Sdk\ConfigTools\ConfigFileLoader;
-use Sdk\HttpTools\CDSApiSoapRequest;
+use Sdk\Common\Point;
 use Sdk\Soap\Common\Body;
 use Sdk\Soap\Common\Envelope;
 use Sdk\Soap\HeaderMessage\HeaderMessage;
@@ -21,7 +20,7 @@ use Sdk\Soap\Seller\Response\GetSellerIndicatorsResponse;
  * Class SellerPoint
  * @package Seller
  */
-class SellerPoint
+class SellerPoint extends Point
 {
 
     /**
@@ -75,28 +74,5 @@ class SellerPoint
 
         $getSellerIndicatorsResponse = new GetSellerIndicatorsResponse($response);
         return $getSellerIndicatorsResponse;
-    }
-
-    /**
-     * @param $method
-     * @param $data
-     * @return string
-     */
-    private function _sendRequest($method, $data)
-    {
-        $headerRequestURL = ConfigFileLoader::getInstance()->getConfAttribute('methodurl');
-
-        $apiURL = ConfigFileLoader::getInstance()->getConfAttribute('url');
-
-        $request = new CDSApiSoapRequest($method, $headerRequestURL, $apiURL, $data);
-        $response = $request->call();
-
-        /*echo "-------------------<br/>";
-
-        echo '<p>'.nl2br(htmlentities($response , ENT_QUOTES | ENT_IGNORE, "UTF-8")).'</p>';
-
-        echo "-------------------<br/>";*/
-
-        return $response;
     }
 }

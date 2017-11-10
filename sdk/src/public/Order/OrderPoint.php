@@ -9,8 +9,7 @@
 namespace Sdk\Order;
 
 
-use Sdk\ConfigTools\ConfigFileLoader;
-use Sdk\HttpTools\CDSApiSoapRequest;
+use Sdk\Common\Point;
 use Sdk\Soap\Common\Body;
 use Sdk\Soap\Common\Envelope;
 use Sdk\Soap\HeaderMessage\HeaderMessage;
@@ -27,7 +26,7 @@ use Sdk\Soap\Order\Response\ManageParcelResponse;
 use Sdk\Soap\Order\ValidateOrderList;
 use Sdk\Soap\Order\ValidateOrderListResponse;
 
-class OrderPoint
+class OrderPoint extends Point
 {
 
     public function __construct()
@@ -209,17 +208,4 @@ class OrderPoint
         
         return $createRefundVoucherResponse;
     }
-
-    private function _sendRequest($method, $data)
-    {
-        $headerRequestURL = ConfigFileLoader::getInstance()->getConfAttribute('methodurl');
-
-        $apiURL = ConfigFileLoader::getInstance()->getConfAttribute('url');
-
-        $request = new CDSApiSoapRequest($method, $headerRequestURL, $apiURL, $data);
-        $response = $request->call();
-
-        return $response;
-    }
-
 }
