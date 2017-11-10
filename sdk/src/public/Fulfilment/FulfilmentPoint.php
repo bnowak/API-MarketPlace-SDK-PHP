@@ -7,8 +7,7 @@
 namespace Sdk\Fulfilment;
 
 
-use Sdk\ConfigTools\ConfigFileLoader;
-use Sdk\HttpTools\CDSApiSoapRequest;
+use Sdk\Common\Point;
 use Sdk\Soap\Common\Body;
 use Sdk\Soap\Common\Envelope;
 use Sdk\Soap\Fulfillment\CreateExternalOrderSoap;
@@ -40,7 +39,7 @@ use Sdk\Soap\Fulfilment\Response\GetFulfilmentActivationReportRequestXmlResponse
 /*
  * Fulfilment point
  */
-class FulfilmentPoint
+class FulfilmentPoint extends Point
 {
     public function __construct()
     {
@@ -357,23 +356,5 @@ class FulfilmentPoint
         $FulfilmentActivationReportRequestXmlResponse = new GetFulfilmentActivationReportRequestXmlResponse($response);
 
         return $FulfilmentActivationReportRequestXmlResponse;
-    }
-
-    /*
-     * @param $method
-     * @param $data
-     * @return $response
-     */
-    private function _sendRequest($method, $data)
-    {
-        $headerRequestURL = ConfigFileLoader::getInstance()->getConfAttribute('methodurl');
-
-        $apiURL = ConfigFileLoader::getInstance()->getConfAttribute('url');
-
-        $request = new CDSApiSoapRequest($method, $headerRequestURL, $apiURL, $data);
-
-        $response = $request->call();
-
-        return $response;
     }
 }
