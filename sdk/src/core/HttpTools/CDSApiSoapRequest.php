@@ -8,6 +8,8 @@
 
 namespace Sdk\HttpTools;
 
+use Zend\Http\Request;
+use Zend\Http\Response;
 
 class CDSApiSoapRequest
 {
@@ -22,7 +24,7 @@ class CDSApiSoapRequest
     private $_client = null;
 
     /**
-     * @var \Zend\Http\Request
+     * @var Request
      */
     private $_request = null;
 
@@ -121,4 +123,19 @@ class CDSApiSoapRequest
         return $response->getBody();
     }
 
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->_client->getRequest();
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse()
+    {
+        return $this->_client->getResponse();
+    }
 }

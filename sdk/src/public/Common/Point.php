@@ -13,6 +13,11 @@ use Sdk\HttpTools\CDSApiSoapRequest;
 abstract class Point
 {
     /**
+     * @var null|CDSApiSoapRequest
+     */
+    private $_lastRequest;
+
+    /**
      * @param string $method
      * @param string $data
      * @return string
@@ -21,8 +26,24 @@ abstract class Point
     {
         $headerRequestURL = ConfigFileLoader::getInstance()->getConfAttribute('methodurl');
         $apiURL = ConfigFileLoader::getInstance()->getConfAttribute('url');
-        $request = new CDSApiSoapRequest($method, $headerRequestURL, $apiURL, $data);
+        $this->_lastRequest = new CDSApiSoapRequest($method, $headerRequestURL, $apiURL, $data);
 
-        return $request->call();
+        return $this->_lastRequest->call();
+    }
+
+    /**
+     * @return null|CDSApiSoapRequest
+     */
+    public function getLastRequest()
+    {
+        return $this->_lastRequest;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasLastRequest()
+    {
+        return isset($this->_lastRequest);
     }
 }
